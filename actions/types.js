@@ -1,0 +1,2 @@
+export const ADD_TO_OWE_LIST = 'ADD_TO_OWE_LIST'
+export const ADD_TO_LENT_LIST = 'ADD_TO_LENT_LIST'
