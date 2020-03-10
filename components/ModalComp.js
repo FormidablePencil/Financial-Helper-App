@@ -16,7 +16,7 @@ const ModalComp = ({ }) => {
    const [inputValue, setinputValue] = useState()
 
    useEffect(() => {
-      setinfoNavigatorCurrentScreen('lentBorrowed')
+      setinfoNavigatorCurrentScreen('LentOwed')
       if (modalCue === 'firstList') { setinputValue(firstList) }
       else if (modalCue === 'secondList') { setinputValue(secondList) }
    })
@@ -81,7 +81,7 @@ const ModalComp = ({ }) => {
 const ModalContentComp = ({ onChangeHandler, firstList, secondList, thirdList, submitOnPress }) => {
 
    const { infoNavigatorCurrentScreen, modalCue } = useContext(FinancialsContext)
-   if (infoNavigatorCurrentScreen === 'lentBorrowed') {
+   if (infoNavigatorCurrentScreen === 'LentOwed') {
       return (
          <View>
             <TextInputsComp onChangeHandler={onChangeHandler} item={'item1'} placeholder={'amount'} firstList={firstList} secondList={secondList} thirdList={thirdList} />

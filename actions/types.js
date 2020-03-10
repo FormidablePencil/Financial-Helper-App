@@ -1,2 +1,4 @@
+//rxconst
 export const ADD_TO_OWE_LIST = 'ADD_TO_OWE_LIST'
 export const ADD_TO_LENT_LIST = 'ADD_TO_LENT_LIST'
+export const EDIT_ITEM_IN_OWE_COLLECTION = 'EDIT_ITEM_IN_OWE_COLLECTION'
