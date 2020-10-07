@@ -1,6 +1,19 @@
 import styled from 'styled-components';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-//exsc
+export const Container = styled.View`
+  flex: 1;
+  width: 100%;
+`;
+export const AlignedCenter = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+export const ListItem = styled.View`
+  background-color: green;
+`;
+// exsc
+
 const ModalBg = styled.View`
    background-color: 'rgba(38,	50,	56, .2)';
    flex: 1;

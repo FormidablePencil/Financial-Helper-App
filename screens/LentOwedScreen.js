@@ -1,24 +1,30 @@
 import React, { useContext, useEffect } from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
-import { Lists, MyListContainer } from '../styles/stylesGlobal'
+import { MyListContainer } from '../styles/stylesGlobal'
 import ModalComp from '../components/ModalComp'
 import MyList from '../components/MyList'
 import { FinancialsContext } from '../navigators/InfoNavigator'
 
-const LentOweddScreen = ({ }) => {
+const LentOweddScreen = ({ }) => { /* //* this is where we define what'll go into the reusable components, which making the child components highly reusable */
    const lent = useSelector(state => state.lent)
    const owed = useSelector(state => state.owed)
-   const { modalCue, setinfoNavigatorCurrentScreen } = useContext(FinancialsContext)
-   console.log(lent, owed)
+   const lentAndOwedSchema = { amount: '', toEntity: '', when: '', dueDate: '' }
+   const { modalCueWhatList, setModalCueWhatList, setinfoNavigatorCurrentScreen } = useContext(FinancialsContext)
+
    useEffect(() => {
-      setinfoNavigatorCurrentScreen('oweAndLent')
+      setinfoNavigatorCurrentScreen('LentOwed')
    }, [])
+
+   {/* //* reusable components below */ }
    return (
       <MyListContainer>
-         <ModalComp modalCue={modalCue} />
-         <MyList list={lent} listName={'lent'} />
-         <MyList list={owed} listName={'owed'} />
+          {modalCueWhatList === 'lent' || modalCueWhatList === 'owed' ?
+            <ModalComp modalCueWhatList={modalCueWhatList} inputValueSchema={lentAndOwedSchema} setModalCueWhatList={setModalCueWhatList} />
+            : null
+         }
+         <MyList collection={lent} collectionName={'lent'} inputValueSchema={lentAndOwedSchema} />
+         <MyList collection={owed} collectionName={'owed'} inputValueSchema={lentAndOwedSchema} />
       </MyListContainer>
    )
 }
@@ -26,5 +32,4 @@ const LentOweddScreen = ({ }) => {
 export default LentOweddScreen
 
 //* functionality first and then placement and design
-//* redux for the complexity of using a calendar
-{/* //~ the modal layout will be all the same but what'll say will be difffent depending upon  */ }
+{/* //* the modal layout will be all the same but what'll say will be difffent depending upon  */ }

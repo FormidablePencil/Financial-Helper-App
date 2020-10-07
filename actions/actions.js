@@ -1,37 +1,16 @@
-import { ADD_TO_OWE_LIST, ADD_TO_LENT_LIST } from "./types";
+import { ADD_TO_OWED_COLLECTION, ADD_TO_LENT_COLLECTION, DELETE_SPECIFIC_ITEM_IN_OWED, DELETE_SPECIFIC_ITEM_IN_LENT, ADD_TO_LIST, DELETE_SPECIFIC_ITEM_IN_TODO, CHANGED_SPECIFIC_VALUE_IN_TODO, DELETE_SPECIFIC_ITEM_IN_TODOLIST } from "./types";
 import * as Random from 'expo-random';
 
-export const actionSaveListAccordingly = (collection, whatCollection, infoNavigatorCurrentScreen) => async dispatch => {
-   console.log(infoNavigatorCurrentScreen)
-   if (infoNavigatorCurrentScreen === 'LentOwed') {
-      let renamedCollection = {}
-      renamedCollection.amount = collection.item1
-      renamedCollection.toEntity = collection.item2
-      renamedCollection.id = await Random.getRandomBytesAsync(16);
-
-      switch (true) {
-         case whatCollection === 'firstList':
-            dispatch({ type: ADD_TO_LENT_LIST, payload: renamedCollection })
-            break;
-         case whatCollection === 'secondList':
-            dispatch({ type: ADD_TO_OWE_LIST, payload: renamedCollection })
-            break;
-         default:
-            break;
-      }
-   }
+export const actionSaveNewCluster = ({ cluster, modalCueWhatList, infoNavigatorCurrentScreen }) => async dispatch => {
+   const id = await Random.getRandomBytesAsync(16)
+   cluster.id = id
+   dispatch({ type: `ADD_TO_${modalCueWhatList.toUpperCase()}_COLLECTION`, payload: cluster })
 }
 
-export const actionEditSpecificItem = ({ id, listName, editedItem }) => dispatch => { //! try to see if you could refractor this code and simply put in
-   if (listName === 'lent') { listName = 'LENT' }
-   else if (listName === 'owed') { listName = 'OWED' }
-   else { listName = false }
+export const actionEditSpecificItem = ({ collectionName, inputValues }) => dispatch => {
+   dispatch({ type: `CHANGED_SPECIFIC_VALUE_IN_${collectionName.toUpperCase()}`, payload: inputValues })
+}
 
-   if (editedItem === 'amount' && listName) {
-      dispatch({ type: `CHANGED_AMOUNT_VALUE_IN_${listName}`, payload: { editedItem, id } })
-   } else if (editItem === 'toEntity' && listName) {
-      dispatch({ type: `CHANGED_TOENTITY_VALUE_IN_${listName}`, payload: { editedItem, id } }) //? does this work? are the values accessible through payload.id for instance?
-   } else {
-      console.log('err in actionEditSpecificItem')
-   }
+export const actionDeleteItemFromCertainCollection = ({ id, collectionName }) => dispatch => {
+   dispatch({ type: `DELETE_SPECIFIC_ITEM_IN_${collectionName.toUpperCase()}`, payload: id })
 }
